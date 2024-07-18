@@ -18,14 +18,22 @@ const StudentSchema = new mongoose.Schema({
             type:String,
             required:true
         },
+
         qualification:{
             type:String,
-            required:true
+            required:true,
+            enum:["high_school","bachelors" ]
         }
 
        
 })
 
-const StudentsModel = mongoose.model("students",StudentSchema)
+StudentSchema.methods.toJSON = function (){
+    const student = this
+    const studentObj = student.toObject()
+    delete studentObj.password
+    return studentObj
+}
 
+const StudentsModel = mongoose.model("students",StudentSchema)
 export default StudentsModel
