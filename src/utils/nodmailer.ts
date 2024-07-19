@@ -1,9 +1,10 @@
 import nodemailer from "nodemailer";
+import dotenv from 'dotenv';
+dotenv.config();
+
 const Email = process.env.Hidemyemail;
 const password = process.env.HideMypassword;
- const SMTP  = process.env.SMTP_NET
- 
-
+//  const SMTP  = process.env.SMTP_NET
 
 export const sendEmail = async (
   email: string,
@@ -13,11 +14,16 @@ export const sendEmail = async (
 
     try {
         const transporter = nodemailer.createTransport({
-          host: SMTP,
+          host: "smtp.gmail.com",
           secure: true,
+          port:465,
           auth: {
             user: Email,
             pass: password,
+          },
+          tls: {
+            // Enable if you encounter issues with the server's SSL/TLS certificate
+            rejectUnauthorized: false,
           },
         });
     

@@ -1,16 +1,18 @@
-const tempOtpStorage = new Map();
+const tempOtpStorage: Map<string, string> = new Map();
 
-module.exports = {
-    set: (email:string, otp:string) => {
-        tempOtpStorage.set(email, otp);
-        setTimeout(() => {
-            tempOtpStorage.delete(email);
-        }, 300000); // OTP expires in 5 minutes
-    },
-    get: (email:string) => {
-        return tempOtpStorage.get(email);
-    },
-    delete: (email:string) => {
+const set = (email: string, otp: string): void => {
+    tempOtpStorage.set(email, otp);
+    setTimeout(() => {
         tempOtpStorage.delete(email);
-    }
+    }, 300000); // OTP expires in 5 minutes
 };
+
+const get = (email: string): string | undefined => {
+    return tempOtpStorage.get(email);
+};
+
+const deleteOtp = (email: string): void => {
+    tempOtpStorage.delete(email);
+};
+
+export default { set, get, deleteOtp };

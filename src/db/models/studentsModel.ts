@@ -23,10 +23,15 @@ const StudentSchema = new mongoose.Schema({
             type:String,
             required:true,
             enum:["high_school","bachelors" ]
+        },
+        verified: {
+            type: Boolean,
+            default: false,
+            required: true
         }
 
        
-})
+},{ timestamps: true });
 
 StudentSchema.methods.toJSON = function (){
     const student = this
