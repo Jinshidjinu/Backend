@@ -16,3 +16,10 @@ export const studentRegisterSchema = joi.object({
       .required(),
     qualification: joi.string().required()  
 })
+
+export const studentLoginSchema = joi.object({
+  LoginData: joi.object({
+      email: joi.string().email().required(),
+      password: joi.string().required()
+  }).required()
+});

@@ -1,12 +1,48 @@
 import StudentsModel from "../../db/models/studentsModel";
-import { hashPassword } from "../../services/passwordManagement/passwordManagement";
-import { userRegisterInterface } from "../../types/Students/AuthInterface";
+import { hashPassword , comparePassword } from "../../services/passwordManagement/passwordManagement";
+import { userRegisterInterface,StudentsLoginInterface } from "../../types/Students/AuthInterface";
 import { RegisterMailStudents } from "../../utils/registerMailStudents";
 import generateOTP from '../../utils/generateOTP'
 import tembstorage from '../../utils/tembstorage'
+import {createAccessToken,createRefreshToken}  from '../../Constants/JwtConfig/jwtConfig'
 
 
 export const StudentsAuthHelpers = ()=>{
+    
+    const studentsLoginHelper = async (details: StudentsLoginInterface) => {
+        try {
+            const { email, password } = details;
+            const Student = await StudentsModel.findOne({ email });
+            if (!Student) {
+                throw new Error("Student not found");
+            }
+            if (Student.isDeleted) {
+                throw new Error("Student is deleted");
+            }
+            const isMatchedPassword = await comparePassword(password, Student.password);
+            if (!isMatchedPassword) {
+                throw new Error("Invalid credentials");
+            }
+            if (!Student.verified) {
+                throw new Error("Student is not verified");
+            }
+
+            const studentId = Student._id.toString();
+            const accessToken = createAccessToken(studentId);
+            const refreshToken = createRefreshToken(studentId);
+
+            return {
+                message: 'Login successful',
+                accessToken,
+                refreshToken
+            };
+
+        } catch (error) {
+            console.error("studentsLoginHelper error:", error);  
+            throw error;
+        }
+    };
+
     
     const studentRegisterHelper = async (details : userRegisterInterface)=>{
         try {
@@ -19,17 +55,14 @@ export const StudentsAuthHelpers = ()=>{
             details.password = hashedPassword
             
             const otp = generateOTP()
-            console.log(otp,'otpppp');
             RegisterMailStudents(details.email, details.name, Number(otp))
 
                // Store OTP temporarily
                tembstorage.set(details.email, otp);
-               console.log(otp, "otp");
-               console.log(tembstorage, 'tempstorage');
-        
+            
             const create = await StudentsModel.create(details)
             return create
-
+            
         } catch (error) {
             throw error
         }
@@ -39,6 +72,7 @@ export const StudentsAuthHelpers = ()=>{
   
 
     return {
-        studentRegisterHelper
+        studentRegisterHelper,
+        studentsLoginHelper
     }
 }

@@ -1,9 +1,10 @@
 import { ObjectId } from "mongoose";
 
-export interface userInterface {
-
+export interface StudentsLoginInterface {
+    email : string,
+    password: string,
+    
 }
-
 
 export interface userRegisterInterface {
 name: string

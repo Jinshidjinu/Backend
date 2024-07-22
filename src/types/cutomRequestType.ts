@@ -6,3 +6,4 @@ export interface CustomRequest extends Request {
     student?: Document | null
     admin?: Document | null
 }
+
