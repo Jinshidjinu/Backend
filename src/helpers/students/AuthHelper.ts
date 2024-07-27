@@ -26,22 +26,12 @@ export const StudentsAuthHelpers = ()=>{
             if (!Student.verified) {
                 throw new Error("Student is not verified");
             }
-
-            const studentId = Student._id.toString();
-            const accessToken = createAccessToken(studentId);
-            const refreshToken = createRefreshToken(studentId);
-
-            return {
-                message: 'Login successful',
-                accessToken,
-                refreshToken
-            };
-
+            return Student            
         } catch (error) {
             console.error("studentsLoginHelper error:", error);  
             throw error;
-        }
-    };
+         }
+        };
 
     
     const studentRegisterHelper = async (details : userRegisterInterface)=>{
@@ -69,7 +59,6 @@ export const StudentsAuthHelpers = ()=>{
     }
 
 
-  
 
     return {
         studentRegisterHelper,

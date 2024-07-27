@@ -18,8 +18,6 @@ export const studentRegisterSchema = joi.object({
 })
 
 export const studentLoginSchema = joi.object({
-  LoginData: joi.object({
-      email: joi.string().email().required(),
-      password: joi.string().required()
-  }).required()
+  email: joi.string().email().required(),
+  password: joi.string().required()
 });

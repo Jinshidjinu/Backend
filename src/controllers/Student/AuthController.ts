@@ -5,33 +5,46 @@ import { studentRegisterSchema , studentLoginSchema} from '../../lib/validations
 import { StudentsAuthHelpers  } from '../../helpers/students/AuthHelper';
 import tembstorage from '../../utils/tembstorage';
 import StudentsModel from '../../db/models/studentsModel';
-import { error } from 'console';
+import {createAccessToken,createRefreshToken}  from '../../Constants/JwtConfig/jwtConfig'
 
 const {
 studentRegisterHelper,
 studentsLoginHelper
-
-
 } = StudentsAuthHelpers()
 
 export const StudentsController = ()=>{
 
-    const studentLogin = async (req: Request, res: Response) => {
-        try {
+        const studentLogin = async (req: Request, res: Response) => { 
+         try {
             const { error, value } = studentLoginSchema.validate(req.body);
             console.log("Validation error:", error);
             if (error) return SendErrorResponse(res, 400, error);
-
-            const {email,password} = value.LoginData;
+            const {email,password} = req.body;
             const response = await studentsLoginHelper({email,password});
             console.log("Login response:", response); 
+            const studentId = response._id.toString();
+            const accessToken  = await createAccessToken(studentId);
+            const refreshToken = await createRefreshToken(studentId);
+            
+            res.cookie("studentToken", refreshToken, {
+                httpOnly: false,
+                sameSite: "none",
+                secure: true,
+            });
+            console.log(req.cookies.studentToken  ,"kooi");
 
-            res.status(200).json(response);
+            res.status(200).json({
+                message:"Login Successfully",
+                response,
+                accessToken
+            });
+
         } catch (error: any) {
             console.error("Login Error: ", error);  
             SendErrorResponse(res, 500, error);
         }
     };
+
 
     const studentSignup = async (req:Request , res:Response) =>{
         try {
@@ -39,21 +52,21 @@ export const StudentsController = ()=>{
             if(error)return  SendErrorResponse(res, 400, error)
                 const response = await studentRegisterHelper(req.body)            
                 res.status(200).json(response)
-        } catch (error : any) {
+         } catch (error : any) {
             SendErrorResponse(res, 500, error)
         }
     }
-
-    const StudentOtpVerify = async (req:Request,res:Response)=>{
+    
+     
+   const StudentOtpVerify = async (req:Request,res:Response)=>{
         try {
         const {email,otpString} = req.body 
-      const user = await StudentsModel.findOne({email})
-      if(!user){
+        const user = await StudentsModel.findOne({email})
+       if(!user){
         return SendErrorResponse(res, 400, new Error("User not found"));
-      }
-       const StoredOtp =  tembstorage.get(email)
-       console.log(StoredOtp ,'storedotp');
-       if (StoredOtp === otpString) {
+       }
+        const StoredOtp =  tembstorage.get(email)
+        if (StoredOtp === otpString) {
         tembstorage.deleteOtp(email)
         user.verified = true
         await user.save()
@@ -61,19 +74,28 @@ export const StudentsController = ()=>{
        }else{
         return SendErrorResponse(res, 400, new Error("OTP does not match"));
        }    
-        } catch (error:any) {
+        }catch (error:any) {
             console.log(error);
             SendErrorResponse(res, 500,error ); 
         }
-
-    } 
+     } 
+    
+    
+     const studentToken = (req: Request, res: Response) => {
+        try {
+            const refreshToken = req.cookies?.studentToken;
+            console.log(refreshToken, "linumol");
+          res.status(200).json({refreshToken})
+        } catch (error) {
+            console.error('Error:', error);
+        }
+    };
+    
+    
     return {
         studentSignup,
         StudentOtpVerify,
         studentLogin,
+        studentToken,
     };
-}
-
-
-
-
+}  
