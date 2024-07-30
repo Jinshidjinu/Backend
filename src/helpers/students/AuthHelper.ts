@@ -58,10 +58,19 @@ export const StudentsAuthHelpers = ()=>{
         }
     }
 
+    const findStudentWithId =async  (id: string)=>{
+        try {
+            return await StudentsModel.findById(id)
+        } catch (error) {
+            throw error
+        }
+    }
+
 
 
     return {
         studentRegisterHelper,
-        studentsLoginHelper
+        studentsLoginHelper,
+        findStudentWithId
     }
 }

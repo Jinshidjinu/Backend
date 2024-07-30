@@ -16,6 +16,5 @@ const start = async () => {
 app.listen(PORT,()=>{
     console.log(PORT,'started');  
 })
-
 // Start the application
 start();

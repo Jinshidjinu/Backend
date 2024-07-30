@@ -2,18 +2,25 @@ import express, {Request,Response} from 'express'
 
 import SendErrorResponse from "../../middlewares/Errrors";
 import { studentRegisterSchema , studentLoginSchema} from '../../lib/validations/students/studentsAuthValidations';
-import { StudentsAuthHelpers  } from '../../helpers/students/AuthHelper';
+import { StudentsAuthHelpers,  } from '../../helpers/students/AuthHelper';
 import tembstorage from '../../utils/tembstorage';
 import StudentsModel from '../../db/models/studentsModel';
-import {createAccessToken,createRefreshToken}  from '../../Constants/JwtConfig/jwtConfig'
+import {createAccessToken,
+        createRefreshToken,
+        verifyToken,
+        createNewAccessToken
+    }  from '../../Constants/JwtConfig/jwtConfig'
+import { CustomRequest } from '../../types/cutomRequestType';
+import { isValidObjectId } from 'mongoose';
+
 
 const {
 studentRegisterHelper,
-studentsLoginHelper
+studentsLoginHelper,
+findStudentWithId
 } = StudentsAuthHelpers()
 
 export const StudentsController = ()=>{
-
         const studentLogin = async (req: Request, res: Response) => { 
          try {
             const { error, value } = studentLoginSchema.validate(req.body);
@@ -81,21 +88,41 @@ export const StudentsController = ()=>{
      } 
     
     
-     const studentToken = (req: Request, res: Response) => {
+     const studentToken = async (req: Request, res: Response) => {
         try {
             const refreshToken = req.cookies?.studentToken;
-            console.log(refreshToken, "linumol");
-          res.status(200).json({refreshToken})
-        } catch (error) {
-            console.error('Error:', error);
+            console.log(refreshToken, "linumol"); 
+            const response :any = await verifyToken(refreshToken)
+            console.log(response,"response of uk");
+            const accessToken : any =await createNewAccessToken(response?._id)
+            console.log(accessToken,"aju");
+            res.status(200).json({ refreshToken: accessToken });
+        } catch (error:any) {
+            console.error('Error:', error); 
+            SendErrorResponse(res, 500,error ); 
         }
     };
+
+    const studentSingle = async (req: CustomRequest, res: Response)=>{
+        try {
+
+            const userId = req.student?._id as string
+            if(!isValidObjectId(userId)){
+                return SendErrorResponse(res, 400, new Error("invalid user id"))
+            }
+            const user = await findStudentWithId(userId)
+            res.status(200).json(user)
+        } catch (error : any) {
+          SendErrorResponse(res, 500,error)  
+        }
+    }
     
-    
+
     return {
         studentSignup,
         StudentOtpVerify,
         studentLogin,
         studentToken,
+        studentSingle
     };
 }  

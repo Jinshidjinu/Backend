@@ -14,15 +14,12 @@ const studentAuth = async (req:CustomRequest, res:Response, next:NextFunction)=>
                 accessToken,
                 process.env.JWT_SECRET as string
             )
-
-
-           const id: string = decoded._id;
+                                 
+           const id:string = decoded._id;
            console.log(id,'id');
-           
            const student = await StudentsModel.findOne({_id:id})
            console.log(student, 'stu');
            
-
            if (!student) {
             const err = new Error('Invalid token');
             return SendErrorResponse(res, 401, err);            
@@ -35,7 +32,6 @@ const studentAuth = async (req:CustomRequest, res:Response, next:NextFunction)=>
             const err = new Error('Authorization header is missing');
             SendErrorResponse(res, 401, err);
         }
-
     } catch (error) {
        console.log(error);
         return SendErrorResponse(res, 403, error as any);

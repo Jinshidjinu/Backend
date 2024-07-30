@@ -8,6 +8,7 @@ const {
     StudentOtpVerify,
     studentLogin,
     studentToken,
+    studentSingle
 } = StudentsController()
 
 const router = express.Router()
@@ -17,6 +18,8 @@ router.post("/login",studentLogin)
 router.post("/register",studentSignup)
 router.post("/verifyOtp",StudentOtpVerify)
 router.get("/StudentToken",studentToken)
+
+router.get("/single", studentAuth, studentSingle)
 
 
 export default router;
