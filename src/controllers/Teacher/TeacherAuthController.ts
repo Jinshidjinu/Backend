@@ -1,6 +1,6 @@
 import TeacherModel from "../../db/models/TeachersModel" 
-import { TeacherAuthHelper } from "../../helpers/Teachers/AuthHelper"
-
+import { TeacherAuthHelper } from "../../helpers/Teachers/TeacherAuthHelper"
+import {Request,Response} from 'express' 
 
 
 
