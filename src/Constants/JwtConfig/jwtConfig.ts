@@ -10,7 +10,7 @@ export const createAccessToken = async  (_id: string)=>{
 
 export const createRefreshToken = async (_id: string)=>{
     try {
-        return  sign({_id}, process.env.JWT_SECRET as string, { expiresIn : "10m"})
+        return  sign({_id}, process.env.JWT_SECRET as string, { expiresIn : "20m"})
     } catch (error) {
         throw error
     }

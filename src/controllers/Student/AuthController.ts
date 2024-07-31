@@ -1,5 +1,4 @@
-import express, {Request,Response} from 'express'
-
+import  {Request,Response} from 'express'
 import SendErrorResponse from "../../middlewares/Errrors";
 import { studentRegisterSchema , studentLoginSchema} from '../../lib/validations/students/studentsAuthValidations';
 import { StudentsAuthHelpers,  } from '../../helpers/students/AuthHelper';
@@ -105,14 +104,13 @@ export const StudentsController = ()=>{
 
     const studentSingle = async (req: CustomRequest, res: Response)=>{
         try {
-
             const userId = req.student?._id as string
             if(!isValidObjectId(userId)){
                 return SendErrorResponse(res, 400, new Error("invalid user id"))
             }
             const user = await findStudentWithId(userId)
             res.status(200).json(user)
-        } catch (error : any) {
+      } catch (error : any) {
           SendErrorResponse(res, 500,error)  
         }
     }

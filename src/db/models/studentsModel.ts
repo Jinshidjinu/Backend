@@ -18,7 +18,10 @@ const StudentSchema = new mongoose.Schema({
             type:String,
             required:true
         },
-
+        Subject:{
+            type:String,
+            required:true
+         },
         qualification:{
             type:String,
             required:true,

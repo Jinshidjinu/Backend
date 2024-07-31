@@ -4,7 +4,6 @@ import { userRegisterInterface,StudentsLoginInterface } from "../../types/Studen
 import { RegisterMailStudents } from "../../utils/registerMailStudents";
 import generateOTP from '../../utils/generateOTP'
 import tembstorage from '../../utils/tembstorage'
-import {createAccessToken,createRefreshToken}  from '../../Constants/JwtConfig/jwtConfig'
 
 
 export const StudentsAuthHelpers = ()=>{
@@ -58,7 +57,7 @@ export const StudentsAuthHelpers = ()=>{
         }
     }
 
-    const findStudentWithId =async  (id: string)=>{
+    const findStudentWithId = async  (id: string)=>{
         try {
             return await StudentsModel.findById(id)
         } catch (error) {

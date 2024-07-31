@@ -13,7 +13,6 @@ const {
 
 const router = express.Router()
 
-
 router.post("/login",studentLogin)
 router.post("/register",studentSignup)
 router.post("/verifyOtp",StudentOtpVerify)
