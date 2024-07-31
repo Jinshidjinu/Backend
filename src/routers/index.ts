@@ -7,7 +7,7 @@ import express from 'express'
 const router = express.Router()
 
     router.use("/students",StudentsRouters)
-    router.use("/Teacher",TeacherRouters)
+    router.use("/Teachers",TeacherRouters)
 
 
 export default router

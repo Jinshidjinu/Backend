@@ -14,7 +14,8 @@ export const studentRegisterSchema = joi.object({
       .valid(joi.ref("password"))
       .error(confirmPasswordError)
       .required(),
-    qualification: joi.string().required()  
+    qualification: joi.string().required(),
+    subject:joi.string().required()  
 })
 
 export const studentLoginSchema = joi.object({
