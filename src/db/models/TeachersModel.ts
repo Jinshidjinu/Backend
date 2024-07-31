@@ -20,12 +20,12 @@ const TeacherSchema = new mongoose.Schema({
          type:String,
          required:true
      },
-     Qualification:{
+     qualification:{
         type:String,
         required:true,
         enum:["CMA","bachelors and CMA","Masters and CMA" ]
      },
-     Subject:{
+     subject:{
         type:String,
         required:true
      },

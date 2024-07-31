@@ -11,7 +11,6 @@ const SendErrorResponse =(
     error:err.message
     ?err.message : err
     ?err : "something went wrong , try again",
-
    }) 
 }
 

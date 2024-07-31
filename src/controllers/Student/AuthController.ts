@@ -27,7 +27,6 @@ export const StudentsController = ()=>{
             if (error) return SendErrorResponse(res, 400, error);
             const {email,password} = req.body;
             const response = await studentsLoginHelper({email,password});
-            console.log("Login response:", response); 
             const studentId = response._id.toString();
             const accessToken  = await createAccessToken(studentId);
             const refreshToken = await createRefreshToken(studentId);
@@ -37,14 +36,11 @@ export const StudentsController = ()=>{
                 sameSite: "none",
                 secure: true,
             });
-            console.log(req.cookies.studentToken  ,"kooi");
-
             res.status(200).json({
                 message:"Login Successfully",
                 response,
                 accessToken
             });
-
         } catch (error: any) {
             console.error("Login Error: ", error);  
             SendErrorResponse(res, 500, error);
@@ -90,14 +86,10 @@ export const StudentsController = ()=>{
      const studentToken = async (req: Request, res: Response) => {
         try {
             const refreshToken = req.cookies?.studentToken;
-            console.log(refreshToken, "linumol"); 
             const response :any = await verifyToken(refreshToken)
-            console.log(response,"response of uk");
             const accessToken : any =await createNewAccessToken(response?._id)
-            console.log(accessToken,"aju");
             res.status(200).json({ refreshToken: accessToken });
         } catch (error:any) {
-            console.error('Error:', error); 
             SendErrorResponse(res, 500,error ); 
         }
     };

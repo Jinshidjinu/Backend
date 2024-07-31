@@ -6,14 +6,14 @@ const passswordError = new Error (
 
 const confirmPasswordError = new Error("confirmPassword must be same Password")
 export const TeacherRegisterValidation = joi.object({
-    name:joi.string().required(),
-    email:joi.string().required(),
+    name: joi.string().required(),
+    email: joi.string().required(),
     phone:joi.string().required(),
-    password:joi.string().regex(passwordRegx).error(passswordError).required(),
-    confirmpassword:joi.string()
-        .valid(joi.ref("password"))
-        .error(confirmPasswordError)
-        .required(),
+    password: joi.string().regex(passwordRegx).error(passswordError).required(),
+    confirmpassword: joi.string()
+      .valid(joi.ref("password"))
+      .error(confirmPasswordError)
+      .required(),
     qualification: joi.string().required(),
     subject:joi.string().required()      
 

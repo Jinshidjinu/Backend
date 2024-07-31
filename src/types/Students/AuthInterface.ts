@@ -12,4 +12,5 @@ email: string;
 phone: string;
 password: string
 qualification: string
+subject:string
 }
