@@ -1,5 +1,5 @@
 import mongoose  from "mongoose"
-
+import validator from "validator";
 const StudentSchema = new mongoose.Schema({
     
         name:{
@@ -14,9 +14,17 @@ const StudentSchema = new mongoose.Schema({
             type:String,
             required:true
         },
-        phone:{
-            type:String,
-            required:true
+        phone: { 
+            type: String,
+            unique: true,
+            validator: [
+                {
+                    validator: function(value: string ) {
+                        return /^\d{10}$/.test(value)
+                    },
+                    message: "Invalid Number" 
+                }
+            ]
         },
         Subject:{
             type:String,
@@ -32,6 +40,11 @@ const StudentSchema = new mongoose.Schema({
             default: false,
             required: true
         },
+        status: {
+            type: String,
+            requred: true,
+            enum: ["pending", "approved", "cancel"],
+          },
         isDeleted: {
             type: Boolean,
             default: false,

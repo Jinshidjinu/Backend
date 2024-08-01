@@ -34,6 +34,16 @@ const TeacherSchema = new mongoose.Schema({
         default: false,
         required: true
      },
+     status: {
+        type: String,
+        requred: true,
+        enum: ["pending", "approved", "cancel"],
+      },
+     verified:{
+        type: Boolean,
+        default: false,
+        required: true
+     },
     isDeleted: {
         type: Boolean,
         default: false,

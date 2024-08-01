@@ -39,19 +39,14 @@ export const StudentsAuthHelpers = ()=>{
             if(existStudents){
                 throw new Error("email already exist")
             }
-
             const hashedPassword = await hashPassword(details.password)
             details.password = hashedPassword
-            
             const otp = generateOTP()
             RegisterMailStudents(details.email, details.name, Number(otp))
-
-               // Store OTP temporarily
-               tembstorage.set(details.email, otp);
-            
+            // Store OTP temporarily
+            tembstorage.set(details.email, otp);
             const create = await StudentsModel.create(details)
             return create
-            
         } catch (error) {
             throw error
         }
