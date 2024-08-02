@@ -4,4 +4,6 @@ import AdminRouter from '../../routers/AdminRouters/AdminRouters'
 
 const router = express.Router()
 
-router.use('/admin',AdminRouter)
+router.use('/auth',AdminRouter)
+
+export default router

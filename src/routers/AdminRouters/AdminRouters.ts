@@ -2,9 +2,6 @@ import express, { Router } from 'express'
 import { AdminController } from '../../controllers/Admin/AdminAuthController'
 
 
-
-
-
 const {
     AdminLogin
  } = AdminController();
