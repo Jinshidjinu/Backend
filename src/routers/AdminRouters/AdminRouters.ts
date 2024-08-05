@@ -11,12 +11,14 @@ const {
 
  const {
     getAllStudentsData,
-    StudentBlockandUnblock
+    StudentBlockandUnblock,
+    StudentDelete
  } = AdminStudentsController()
 
 const router = express.Router();
 router.post('/Adminlogin', AdminLogin);
 router.get('/userdetails',getAllStudentsData)
 router.post('/studentsBlock/:id',StudentBlockandUnblock)
+router.post('/studentDelete/:id',StudentDelete)
 
 export default router;

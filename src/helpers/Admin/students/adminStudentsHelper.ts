@@ -12,10 +12,9 @@ export const adminStudentsHelpers =  () => {
         }
     };
     
-    const StudentBlockandUnblockHelpr = async (data:any) =>{
+    const StudentBlockandUnblockHelpr = async (data:string) =>{
         try {
             const student = await StudentsModel.findById(data)
-
             if (!student) {
                 throw new Error("Student not found");
             }
@@ -25,16 +24,29 @@ export const adminStudentsHelpers =  () => {
         } catch (error:any) {
             throw error;
         }
-      
+      }   
 
-    }   
+        const StudentDeleteHelper = async (id:string) =>{
+            try {
+              const updateStudent = await StudentsModel.findByIdAndUpdate(
+                 id,
+                 {isDeleted:true},
+                 {new:true}
+              )
+              return updateStudent  
+            } catch (error:any) {
+                throw error
+                
+            }
 
 
+        }
 
 
 
     return {
         getAllStudentsDataHelper,
         StudentBlockandUnblockHelpr,
+        StudentDeleteHelper,
     };
 };
