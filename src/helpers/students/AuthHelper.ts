@@ -22,7 +22,7 @@ export const StudentsAuthHelpers = ()=>{
             if (!isMatchedPassword) {
                 throw new Error("Invalid credentials");
             }
-            if (!Student.verified) {
+            if (!Student.status) {
                 throw new Error("Student is not verified");
             }
             return Student            

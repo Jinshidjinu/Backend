@@ -71,7 +71,7 @@ export const StudentsController = ()=>{
         const StoredOtp =  tembstorage.get(email)
         if (StoredOtp === otpString) {
         tembstorage.deleteOtp(email)
-        user.verified = true
+        user.status = "approved"; 
         await user.save()
         res.status(200).json({message:"OTP verified successfully"})
        }else{

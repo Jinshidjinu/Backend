@@ -5,15 +5,18 @@ import { AdminStudentsController } from '../../controllers/Admin/students/AdminS
 
 const {
     AdminLogin,
+
     
  } = AdminController();
 
  const {
     getAllStudentsData,
+    StudentBlockandUnblock
  } = AdminStudentsController()
 
 const router = express.Router();
 router.post('/Adminlogin', AdminLogin);
 router.get('/userdetails',getAllStudentsData)
+router.post('/studentsBlock/:id',StudentBlockandUnblock)
 
 export default router;

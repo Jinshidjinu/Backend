@@ -26,7 +26,7 @@ const StudentSchema = new mongoose.Schema({
                 }
             ]
         },
-        Subject:{
+        subject:{
             type:String,
             required:true
          },
@@ -35,16 +35,13 @@ const StudentSchema = new mongoose.Schema({
             required:true,
             enum:["high_school","bachelors" ]
         },
-        verified: {
-            type: Boolean,
-            default: false,
-            required: true
-        },
         status: {
             type: String,
-            requred: true,
-            enum: ["pending", "approved", "cancel"],
+            required: true,
+            enum: ["pending", "approved", "cancel", "blocked", "unblocked"],
+            default: "unblocked",
           },
+          
         isDeleted: {
             type: Boolean,
             default: false,
