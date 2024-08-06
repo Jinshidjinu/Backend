@@ -3,7 +3,6 @@ dotenv.config()
 import { Request,Response } from "express"
 import SendErrorResponse from '../../middlewares/Errrors'
 import {AdminLoginInterface} from '../../types/Admin/AdminInterface'
-import StudentsModel from '../../db/models/studentsModel'
 
 
 const Admin: AdminLoginInterface = {
@@ -12,7 +11,6 @@ const Admin: AdminLoginInterface = {
 };
 
 export const AdminController = () => {
-
     const AdminLogin = async (req: Request, res: Response) => {
         try {
             const AdminData: AdminLoginInterface = req.body;
@@ -25,13 +23,6 @@ export const AdminController = () => {
             SendErrorResponse(res, 500, error);
         }
     };
-
-
-
-
-
-
-
     return {
         AdminLogin,
     };

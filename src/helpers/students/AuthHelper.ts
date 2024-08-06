@@ -7,7 +7,6 @@ import tembstorage from '../../utils/tembstorage'
 
 
 export const StudentsAuthHelpers = ()=>{
-    
     const studentsLoginHelper = async (details: StudentsLoginInterface) => {
         try {
             const { email, password } = details;
@@ -32,7 +31,7 @@ export const StudentsAuthHelpers = ()=>{
          }
         };
 
-    
+
     const studentRegisterHelper = async (details : userRegisterInterface)=>{
         try {
             const existStudents = await StudentsModel.findOne({email: details.email})
@@ -59,9 +58,7 @@ export const StudentsAuthHelpers = ()=>{
             throw error
         }
     }
-
-
-
+    
     return {
         studentRegisterHelper,
         studentsLoginHelper,
