@@ -11,7 +11,8 @@ const {
  } = AdminController();
 
  const {
-   subjectVideo
+   subjectVideo,
+   getVideosDetails
  } = AdminTotalController()
 
  const {
@@ -27,6 +28,7 @@ router.get('/userdetails',getAllStudentsData)
 router.post('/studentsBlock/:id',StudentBlockandUnblock)
 router.post('/studentDelete/:id',StudentDelete)
 router.post('/addvideos',videosmulter.single('video'),subjectVideo)
+router.get('/videosdetails',getVideosDetails)
 
 
 export default router

@@ -18,9 +18,21 @@ export const AdminTotalHelper =  () =>{
            throw error
         }
     }
-   
+
+    const getVideosdataHelper = async ()=>{
+           try {
+            const videosdetails = await subVideoModel.find({isDeleted:false})
+            return videosdetails;
+           } catch (error:any) {
+            throw error
+           }
+
+
+
+    }
    return {
     subjectVideoHelper,
+    getVideosdataHelper
 
    }
 
