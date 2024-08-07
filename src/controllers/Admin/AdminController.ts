@@ -4,7 +4,8 @@ import SendErrorResponse from "../../middlewares/Errrors"
 
 const {
     subjectVideoHelper,
-    getVideosdataHelper
+    getVideosdataHelper,
+    videoDeleteHelper
 
 
 } = AdminTotalHelper()
@@ -37,9 +38,26 @@ export const AdminTotalController =  () =>{
     }
 
 
+
+    const videoDelete = async (req: Request, res: Response) => {
+        const { id } = req.params;
+        try {
+            const UpdatedVideos = await videoDeleteHelper(id)
+            if (UpdatedVideos) {
+                res.status(200).json({message:"video marked as deleted successfully"})
+            }else{
+              return  SendErrorResponse(res, 400, new Error("video not found"));
+            }
+           } catch (error:any) {
+            SendErrorResponse(res, 500, error);
+           }
+       
+    }
+
     return {
         subjectVideo,
-        getVideosDetails
+        getVideosDetails,
+        videoDelete
     }
 
 }

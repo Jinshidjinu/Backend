@@ -2,7 +2,11 @@ import { Request,Response } from "express"
 import StudentsModel from "../../../db/models/studentsModel"
 import SendErrorResponse from "../../../middlewares/Errrors"
 import { adminStudentsHelpers } from "../../../helpers/Admin/students/adminStudentsHelper"
-const { getAllStudentsDataHelper,StudentBlockandUnblockHelpr,StudentDeleteHelper } = adminStudentsHelpers();
+const { 
+    getAllStudentsDataHelper,
+    StudentBlockandUnblockHelpr,
+    StudentDeleteHelper 
+} = adminStudentsHelpers();
 
 export const AdminStudentsController =  () =>{
 
@@ -37,8 +41,8 @@ export const AdminStudentsController =  () =>{
         }else{
           return  SendErrorResponse(res, 400, new Error("Student not found"));
         }
-       } catch (error) {
-        
+       } catch (error:any) {
+        SendErrorResponse(res, 500, error);
        }
 
         

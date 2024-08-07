@@ -26,13 +26,27 @@ export const AdminTotalHelper =  () =>{
            } catch (error:any) {
             throw error
            }
-
-
-
     }
+
+    const videoDeleteHelper = async (id:string)=>{
+      try {
+        const updated = await subVideoModel.findByIdAndUpdate(
+          id,
+          {isDeleted:true},
+          {new:true}
+        )
+        return updated;
+        
+      } catch (error:any) {
+        throw error
+      }
+    }
+
+
    return {
     subjectVideoHelper,
-    getVideosdataHelper
+    getVideosdataHelper,
+    videoDeleteHelper
 
    }
 
