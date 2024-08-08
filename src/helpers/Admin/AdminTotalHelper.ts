@@ -1,5 +1,5 @@
 import subVideoModel from "../../db/models/Admin/subVideoModel"
-import { SubjectVideosInterface } from "../../types/Admin/AdminInterface"
+import { SubjectVideosInterface,UpdatedVideoDataInterface,EditVideosHelperResultInterface } from "../../types/Admin/AdminInterface"
 
 
 
@@ -38,8 +38,21 @@ export const AdminTotalHelper =  () =>{
       }
     }
 
-   const EditVideosHelper = async (data:string) =>{
+   const EditVideosHelper = async (id:string , updateData:UpdatedVideoDataInterface) =>{
         try {
+          const updatedVideo = await subVideoModel.findByIdAndUpdate(
+            id,
+            {
+              $set : updateData,
+            },
+            {new:true}
+          )
+
+         if (!updatedVideo) {
+          throw new Error("Video not found");
+         }
+
+        return updatedVideo;
               
         } catch (error:any) {
           throw error

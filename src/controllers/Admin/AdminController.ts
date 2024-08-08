@@ -2,6 +2,7 @@ import { Request , Response } from "express"
 import { AdminTotalHelper } from "../../helpers/Admin/AdminTotalHelper"
 import SendErrorResponse from "../../middlewares/Errrors"
 
+
 const {
     subjectVideoHelper,
     getVideosdataHelper,
@@ -52,6 +53,13 @@ export const AdminTotalController =  () =>{
     const EditVideos = async (req:Request , res:Response) =>{
          try {
             const {id} = req.params; 
+            const updateData = {
+                title: req.body.title,
+                description: req.body.description,
+                videoPath: req.file?.path, // If the video file was changed
+            }
+            const result = await EditVideosHelper(id,updateData)
+            
             
          } catch (error) {
             
