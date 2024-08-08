@@ -28,6 +28,25 @@ export const AdminTotalHelper =  () =>{
            }
     }
 
+
+    const getVideoByIdHelper = async (id:string) =>{
+      try {
+        const videofind = await subVideoModel.findById(id)
+        return videofind;
+      } catch (error) {
+        throw error
+      }
+    }
+
+   const EditVideosHelper = async (data:string) =>{
+        try {
+              
+        } catch (error:any) {
+          throw error
+        }
+   }
+
+
     const videoDeleteHelper = async (id:string)=>{
       try {
         const updated = await subVideoModel.findByIdAndUpdate(
@@ -46,7 +65,9 @@ export const AdminTotalHelper =  () =>{
    return {
     subjectVideoHelper,
     getVideosdataHelper,
-    videoDeleteHelper
+    videoDeleteHelper,
+    EditVideosHelper,
+    getVideoByIdHelper
 
    }
 

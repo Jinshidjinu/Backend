@@ -5,7 +5,9 @@ import SendErrorResponse from "../../middlewares/Errrors"
 const {
     subjectVideoHelper,
     getVideosdataHelper,
-    videoDeleteHelper
+    videoDeleteHelper,
+    getVideoByIdHelper,
+    EditVideosHelper,
 
 
 } = AdminTotalHelper()
@@ -37,12 +39,32 @@ export const AdminTotalController =  () =>{
         }
     }
 
+    const getVideoById  = async (req:Request, res:Response)=>{
+        try {
+            const {id} = req.params;            
+            const videoshow = await getVideoByIdHelper(id)            
+            res.json(videoshow);
+        } catch (error:any) {
+            SendErrorResponse(res , 500, error)
+        }
+    }
+
+    const EditVideos = async (req:Request , res:Response) =>{
+         try {
+            const {id} = req.params; 
+            
+         } catch (error) {
+            
+         }
+    }
+
 
 
     const videoDelete = async (req: Request, res: Response) => {
         const { id } = req.params;
         try {
             const UpdatedVideos = await videoDeleteHelper(id)
+            
             if (UpdatedVideos) {
                 res.status(200).json({message:"video marked as deleted successfully"})
             }else{
@@ -57,7 +79,9 @@ export const AdminTotalController =  () =>{
     return {
         subjectVideo,
         getVideosDetails,
-        videoDelete
+        videoDelete,
+        EditVideos,
+        getVideoById
     }
 
 }

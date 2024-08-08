@@ -1,5 +1,4 @@
 import { Request,Response } from "express"
-import StudentsModel from "../../../db/models/studentsModel"
 import SendErrorResponse from "../../../middlewares/Errrors"
 import { adminStudentsHelpers } from "../../../helpers/Admin/students/adminStudentsHelper"
 const { 
@@ -35,7 +34,6 @@ export const AdminStudentsController =  () =>{
         const { id } = req.params
        try {
         const updateStudent = await StudentDeleteHelper(id)
-
         if (updateStudent) {
             res.status(200).json({message:"Student marked as deleted successfully"})
         }else{
@@ -44,10 +42,12 @@ export const AdminStudentsController =  () =>{
        } catch (error:any) {
         SendErrorResponse(res, 500, error);
        }
-
-        
     }
     
+
+
+
+
     return {
         getAllStudentsData,
         StudentBlockandUnblock,

@@ -13,7 +13,9 @@ const {
  const {
    subjectVideo,
    getVideosDetails,
-   videoDelete
+   videoDelete,
+   EditVideos,
+   getVideoById
  } = AdminTotalController()
 
  const {
@@ -30,7 +32,9 @@ router.post('/studentsBlock/:id',StudentBlockandUnblock)
 router.post('/studentDelete/:id',StudentDelete)
 router.post('/addvideos',videosmulter.single('video'),subjectVideo)
 router.get('/videosdetails',getVideosDetails)
-router.post('/videoDelete/:id', videoDelete);
+router.post('/videoDelete/:id', videoDelete)
+router.post('/editvideos/:id',EditVideos)
+router.get('/getvideo/:id',getVideoById)
 
 
 export default router
